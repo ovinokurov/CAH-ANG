@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <span>Ordering & Tracking</span>
+  <span class="spacer"></span>
+  <!--
+  <button mat-button (click)="navigateToHome()">Home</button>
+  <button mat-button (click)="navigateToOrdering()">Orders</button>
+  <button mat-button (click)="navigateToLogin()">Login</button>
+  -->
+  <button mat-button>Sam Ford</button>
+  <button mat-icon-button (click)="navigateToLogin()">
+    <mat-icon>logout</mat-icon>
+  </button>
+  <span>SF</span>
+</mat-toolbar>
+
+<div class="pharmacy-info">
+  Pharmacy: CAN | Columbus, OH
+</div>
+
+<router-outlet></router-outlet>

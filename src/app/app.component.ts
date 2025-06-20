@@ -9,34 +9,8 @@ import { Router } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, MatToolbarModule, MatButtonModule, MatIconModule],
-  template: `
-    <div class="pharmacy-info">
-      Pharmacy: CAN | Columbus, OH
-    </div>
-    
-    <mat-toolbar color="primary">
-      <span>Logo</span>
-      <span class="spacer"></span>      <button mat-button (click)="navigateToHome()">Home</button>
-      <button mat-button (click)="navigateToOrdering()">Orders</button>
-      <button mat-button (click)="navigateToLogin()">Login</button>
-      <button mat-button>Sam Ford</button>
-      <button mat-icon-button>
-        <mat-icon>logout</mat-icon>
-      </button>
-      <span>SF</span>
-    </mat-toolbar>
-
-    <router-outlet></router-outlet>
-  `,
-  styles: [`
-    .spacer {
-      flex: 1 1 auto;
-    }
-    
-    mat-toolbar {
-      border-bottom: 3px solid #3f51b5;
-    }
-  `]
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'Ordering/Tracking';
