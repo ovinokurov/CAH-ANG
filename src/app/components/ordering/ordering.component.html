@@ -1,0 +1,260 @@
+<app-sidebar-layout [navItems]="navItems">
+  <!-- Initial View - Just Header and Add New Button -->
+  <div *ngIf="currentView === 'initial'" class="initial-view">
+    <div class="header-section">
+      <h2>Ordering & Scheduling</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      
+      <div class="add-new-section">
+        <button mat-raised-button color="primary" (click)="showNewOrderForm()">Add New</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- Ordering List View -->
+    <div *ngIf="currentView === 'list'" class="ordering-list">
+      <div class="header-section">
+        <h2>Ordering & Scheduling</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        
+        <div class="filter-section">
+          <div class="filter-row">
+            <span>Filter</span>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>--Select--</mat-label>
+              <mat-select>
+                <mat-option value="">--Select--</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="filter-field">
+              <mat-label>--Select--</mat-label>
+              <mat-select>
+                <mat-option value="">--Select--</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="showNewOrderForm()">Add New</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="orders-table">
+        <div class="table-row header-row">
+          <div class="col-patient">Patient Name - Treatment Plan</div>
+          <div class="col-components">Components</div>
+          <div class="col-date">Due Date</div>
+          <div class="col-status">Status</div>
+        </div>
+        
+        <div *ngFor="let order of orderRecords" class="table-row data-row">
+          <div class="col-patient">{{ order.patientName }} | {{ order.components }} Components</div>
+          <div class="col-components">{{ order.components }}</div>
+          <div class="col-date">{{ order.dueDate }}</div>
+          <div class="col-status">
+            <span [class]="getStatusClass(order.status)">{{ order.status }}</span>
+          </div>
+        </div>
+
+        <div class="table-row data-row resume-row">
+          <div class="col-patient">New Patient Name ✓</div>
+          <div class="col-components">-</div>
+          <div class="col-date">-</div>
+          <div class="col-status">
+            <span class="status-resume">Resume Ordering</span>
+          </div>
+        </div>
+      </div>
+    </div>    <!-- New/Edit Order Form -->
+    <div *ngIf="currentView === 'new-edit'" class="order-form">
+      <h2>Ordering & Scheduling: New/Edit</h2>
+      
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>Patient & Physician Info</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>          <div class="form-row">
+            <mat-form-field appearance="outline" class="patient-field">
+              <mat-label>Patient Name</mat-label>
+              <mat-select [(ngModel)]="selectedPatientName">
+                <mat-option *ngFor="let patient of patients" [value]="patient.name">
+                  {{ patient.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="classification-field">
+              <mat-label>Classification</mat-label>
+              <mat-select [(ngModel)]="selectedClassification">
+                <mat-option value="">--Select--</mat-option>
+                <mat-option *ngFor="let classification of classifications" [value]="classification">
+                  {{ classification }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="tracking-field">
+              <mat-label>Tracking Code</mat-label>
+              <mat-select [(ngModel)]="selectedTrackingCode">
+                <mat-option value="">--Select--</mat-option>
+                <mat-option *ngFor="let code of trackingCodes" [value]="code">
+                  {{ code }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="physician-field">
+              <mat-label>Referring Physician</mat-label>
+              <mat-select [(ngModel)]="selectedReferringPhysician">
+                <mat-option value="">--Select or Add New--</mat-option>
+                <mat-option *ngFor="let physician of physicians" [value]="physician.name">
+                  {{ physician.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" class="physician-field">
+              <mat-label>Attending Physician</mat-label>
+              <mat-select [(ngModel)]="selectedAttendingPhysician">
+                <mat-option value="">--Select or Add New--</mat-option>
+                <mat-option *ngFor="let physician of physicians" [value]="physician.name">
+                  {{ physician.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>      <!-- Procedure Section -->
+      <div class="procedure-section">
+        <h3>Procedure</h3>
+        <div class="procedure-row">
+          <span>Theranostics Procedure</span>
+          <mat-form-field appearance="outline" class="procedure-field">
+            <mat-select [(ngModel)]="selectedProcedure" (selectionChange)="onProcedureChange()">
+              <mat-option value="">--Select--</mat-option>
+              <mat-option *ngFor="let procedure of procedures" [value]="procedure.name">
+                {{ procedure.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>      <!-- Components List - Expandable format matching mockup -->
+      <div *ngIf="showComponents" class="components-section">
+        <div *ngFor="let component of components; let i = index" class="component-item-expandable">
+          <!-- Component Header (clickable) -->
+          <div class="component-header-simple" (click)="toggleComponent(component)">
+            <span [class]="i === 0 ? 'component-first' : 'component-other'">
+              {{ i + 1 }} - Component Name: {{ component.name }}
+            </span>
+            <span [class]="i === 0 ? 'status-tbd' : 'status-due'" class="component-status-simple">
+              {{ component.status }}
+            </span>
+          </div>
+          
+          <!-- Expanded Component Details -->
+          <div *ngIf="component.expanded" class="component-details">
+            <div class="details-row">
+              <div class="dose-section">
+                <label>Dose Amount</label>
+                <mat-form-field appearance="outline" class="dose-field">
+                  <input matInput [(ngModel)]="component.doseAmount" type="number">
+                  <span matSuffix>mCi</span>
+                </mat-form-field>
+              </div>              <div class="date-section">
+                <label>Date</label>
+                <mat-form-field appearance="outline" class="date-field">
+                  <input matInput [matDatepicker]="datePicker" [(ngModel)]="component.date">
+                  <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #datePicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              
+              <div class="time-section">
+                <label>Time: Hour</label>
+                <mat-form-field appearance="outline" class="time-field">
+                  <mat-select [(ngModel)]="component.timeHour">
+                    <mat-option *ngFor="let hour of timeHours" [value]="hour">
+                      {{ hour }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              
+              <div class="min-section">
+                <label>Min</label>
+                <mat-form-field appearance="outline" class="min-field">
+                  <mat-select [(ngModel)]="component.timeMin">
+                    <mat-option *ngFor="let min of timeMinutes" [value]="min">
+                      {{ min }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="details-row">
+              <div class="visit-section">
+                <label>Visit ID</label>
+                <mat-form-field appearance="outline" class="visit-field">
+                  <input matInput [(ngModel)]="component.visitId">
+                </mat-form-field>
+              </div>
+              
+              <div class="notes-section">
+                <label>Pharmacy Notes</label>
+                <mat-form-field appearance="outline" class="notes-field">
+                  <textarea matInput [(ngModel)]="component.pharmacyNotes" rows="2"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="details-row">
+              <div class="volume-section">
+                <label>QS Volume</label>
+                <mat-form-field appearance="outline" class="volume-field">
+                  <input matInput [(ngModel)]="component.qsVolume" type="number">
+                  <span matSuffix>mL</span>
+                </mat-form-field>
+              </div>
+              
+              <div class="po-section">
+                <label>PO Number</label>
+                <mat-form-field appearance="outline" class="po-field">
+                  <mat-select [(ngModel)]="component.poNumber">
+                    <mat-option value="">--Select--</mat-option>
+                    <mat-option *ngFor="let po of poNumbers" [value]="po">
+                      {{ po }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              
+              <div class="ordering-physician-section">
+                <label>Ordering Physician</label>
+                <mat-form-field appearance="outline" class="ordering-physician-field">
+                  <mat-select [(ngModel)]="component.orderingPhysician">
+                    <mat-option *ngFor="let physician of physicians" [value]="physician.name">
+                      {{ physician.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="checkbox-section">
+              <mat-checkbox>Order online through my Cardinal Health Nuclear Pharmacy</mat-checkbox>
+            </div>
+
+            <div class="lorem-text">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
+        </div>        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button mat-button (click)="cancelOrder()">Cancel</button>
+          <button mat-raised-button color="primary" (click)="saveOrder()">Save</button>
+        </div>
+      </div>
+    </div>
+</app-sidebar-layout>

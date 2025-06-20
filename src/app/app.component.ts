@@ -16,8 +16,8 @@ import { Router } from '@angular/router';
     
     <mat-toolbar color="primary">
       <span>Logo</span>
-      <span class="spacer"></span>
-      <button mat-button (click)="navigateToHome()">Home</button>
+      <span class="spacer"></span>      <button mat-button (click)="navigateToHome()">Home</button>
+      <button mat-button (click)="navigateToOrdering()">Orders</button>
       <button mat-button (click)="navigateToLogin()">Login</button>
       <button mat-button>Sam Ford</button>
       <button mat-icon-button>
@@ -42,9 +42,12 @@ export class AppComponent {
   title = 'Ordering/Tracking';
 
   constructor(private router: Router) {}
-
   navigateToHome() {
     this.router.navigate(['/home']);
+  }
+
+  navigateToOrdering() {
+    this.router.navigate(['/ordering']);
   }
 
   navigateToLogin() {

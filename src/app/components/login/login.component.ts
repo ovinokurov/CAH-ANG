@@ -7,18 +7,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '../../shared/components/page-layout/page-layout.component';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [
+  standalone: true,  imports: [
     CommonModule,
     ReactiveFormsModule,
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    PageLayoutComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
