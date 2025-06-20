@@ -2,30 +2,33 @@
 .login-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex: 1;
-  margin-top: 50px;
+  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .login-card {
-  width: 400px;
+  width: 350px;
   max-width: 90%;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 // Page content styling
 h2 {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  margin-top: 0;
   color: #333;
 }
 
 p {
   color: #666;
-  margin-bottom: 25px;
-  line-height: 1.5;
+  margin-bottom: 15px;
+  margin-top: 0;
+  line-height: 1.4;
 }
