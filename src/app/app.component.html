@@ -6,11 +6,12 @@
   <button mat-button (click)="navigateToOrdering()">Orders</button>
   <button mat-button (click)="navigateToLogin()">Login</button>
   -->
-  <button mat-button>Sam Ford</button>
-  <button mat-icon-button (click)="navigateToLogin()">
+  <!-- Only show user info and logout when NOT on login page -->
+  <button mat-button *ngIf="!isLoginPage">Sam Ford</button>
+  <button mat-icon-button (click)="navigateToLogin()" *ngIf="!isLoginPage">
     <mat-icon>logout</mat-icon>
   </button>
-  <span>SF</span>
+  <span *ngIf="!isLoginPage">SF</span>
 </mat-toolbar>
 
 <div class="pharmacy-info">
